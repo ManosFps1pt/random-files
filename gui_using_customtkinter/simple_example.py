@@ -1,5 +1,6 @@
 import random
 import customtkinter
+
 # import tkinterDnD
 
 # customtkinter.set_ctk_parent_class(tkinterDnD.Tk)
@@ -10,6 +11,7 @@ customtkinter.set_default_color_theme("blue")  # Themes: "blue" (standard), "gre
 app = customtkinter.CTk()
 app.geometry("400x780")
 app.title("CustomTkinter simple_example.py")
+
 
 # print(type(app), isinstance(app, tkinterDnD.Tk))
 
@@ -73,7 +75,5 @@ tabview_1 = customtkinter.CTkTabview(master=frame_1, width=300)
 tabview_1.pack(pady=10, padx=10)
 tabview_1.add("CTkTabview")
 tabview_1.add("Tab 2")
-
-
 
 app.mainloop()
