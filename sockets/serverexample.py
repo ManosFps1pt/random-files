@@ -17,5 +17,5 @@ client, addr = server.accept()
 
 print(f"Connected with {str(addr)}")
 
-client.send("hi".encode())
+client.send(f"hi {addr}".encode())
 
