@@ -5,10 +5,13 @@ import threading
 nickname = input("Choose your nickname: ")
 
 # Connecting To Server
+server = "dra-server.mywire.org"
+port = 55_555
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client.connect(("127.0.0.1", 55555))
+print("connecting")
 
-print(client.recv(1048).decode())
+client.connect((server, port))
+print(f"connected successfully to {server}")
 
 
 # Listening to Server and Sending Nickname
@@ -17,7 +20,7 @@ def receive():
         try:
             # Receive Message From Server
             # If 'NICK' Send Nickname
-            message = client.recv(1024).decode()
+            message = client.recv(1048).decode()
             if message == 'NICK':
                 client.send(nickname.encode())
             else:
@@ -32,7 +35,7 @@ def receive():
 # Sending Messages To Server
 def write():
     while True:
-        message = '{}: {}'.format(nickname, input(''))
+        message = '{}: {}'.format(nickname, input(" "))
         client.send(message.encode())
 
 

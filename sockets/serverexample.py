@@ -2,8 +2,13 @@ import socket
 import threading
 
 # Connection Data
-host = "127.0.0.1"
-port = 55555
+host = "192.168.1.100"
+port = 55_555
+
+
+# special messages
+disc_message = "$DISCONNECT$"
+nick_message = "$NICK$"
 
 # Starting Server
 print("Starting server")
@@ -23,11 +28,14 @@ def broadcast(message):
 
 
 # Handling Messages From Clients
-def handle(client):
+def handle(client, addr):
     while True:
         try:
             # Broadcasting Messages
             message = client.recv(1024)
+            if message == disc_message:
+                client.close()
+            print(f"msg from {addr}")
             broadcast(message)
         except:
             # Removing And Closing Clients
@@ -43,6 +51,7 @@ def handle(client):
 # Receiving / Listening Function
 def receive():
     while True:
+        print("waiting for (other) connections")
         # Accept Connection
         client, address = server.accept()
         print("Connected with {}".format(str(address)))
@@ -59,7 +68,7 @@ def receive():
         client.send('Connected to server!'.encode())
 
         # Start Handling Thread For Client
-        thread = threading.Thread(target=handle, args=(client,))
+        thread = threading.Thread(target=handle, args=(client, address))
         thread.start()
 
 
