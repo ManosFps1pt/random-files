@@ -8,10 +8,9 @@ nickname = input("Choose your nickname: ")
 server = "dra-server.mywire.org"
 port = 55_555
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-print("connecting")
+client.connect(("dra-server.mywire.org", 55_555))
 
-client.connect((server, port))
-print(f"connected successfully to {server}")
+print(client.recv(1048).decode())
 
 
 # Listening to Server and Sending Nickname
@@ -20,7 +19,7 @@ def receive():
         try:
             # Receive Message From Server
             # If 'NICK' Send Nickname
-            message = client.recv(1048).decode()
+            message = client.recv(1024).decode()
             if message == 'NICK':
                 client.send(nickname.encode())
             else:
@@ -35,7 +34,7 @@ def receive():
 # Sending Messages To Server
 def write():
     while True:
-        message = '{}: {}'.format(nickname, input(" "))
+        message = '{}: {}'.format(nickname, input(''))
         client.send(message.encode())
 
 
